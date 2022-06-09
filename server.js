@@ -2,8 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const Asset = require('../Server/models/assets');
-const User = require('../Server/models/user');
+const Asset = require('./models/assets');
+const User = require('./models/user');
 const jwt = require('jsonwebtoken');
 
 mongoose.connect(
