@@ -1,0 +1,54 @@
+		---------------------------------------------|---------|----------|---------|---------|---------------------
+		File                                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s   
+		---------------------------------------------|---------|----------|---------|---------|---------------------          
+		 Modules/Datasource                          |   79.57 |    83.95 |   71.88 |   89.78 |                     
+		  ConfirmDeleteDatasourceModal.tsx           |   88.89 |      100 |      75 |   88.89 | 29                  
+		  DatasourceList.tsx                         |   78.57 |     82.7 |   71.43 |   88.75 | 347,387-409 
+		 Modules/Datasource/Actions                  |   92.53 |    87.61 |   89.89 |    93.6 |                     
+		  addDataSource.actions.ts                   |   91.49 |      100 |   83.33 |   93.18 | 125-127             
+		  datasource.list.actions.ts                 |   86.36 |    86.67 |     100 |   84.21 | 65-67               
+		  deleteDatasource.actions.ts                |     100 |      100 |     100 |     100 |                     
+		  editDatasource.actions.ts                  |   91.11 |      100 |   83.33 |   92.86 | 122-124             
+		  getDSARSampleData.actions.ts               |   77.42 |       70 |   71.43 |   81.48 | 68-69,97-99         
+		  getDatasourceById.actions.ts               |   81.82 |    86.67 |      80 |   84.21 | 73-75               
+		  getSaaSDatasourceConfig.actions.ts         |   80.77 |    86.67 |      80 |   81.82 | 69-71            
+		  saasTableTraining.actions.ts               |     100 |      100 |     100 |     100 |                     
+		  scanNow.actions.ts                         |     100 |      100 |     100 |     100 |                     
+		  table-training.actions.ts                  |     100 |      100 |     100 |     100 |                     
+		  testAuth.actions.ts                        |   86.21 |      100 |   85.71 |    87.5 | 104-106             
+		  update-table-training.actions.ts           |   95.65 |      100 |   81.82 |    97.5 | 76                  
+		  upgradePlan.actions.ts                     |     100 |      100 |     100 |     100 |                     
+		  viewSampleData.actions.ts                  |      96 |    83.33 |     100 |   95.45 | 64                  
+		 Modules/Datasource/AddEditDatasource        |   54.11 |    70.06 |   77.84 |   53.65 |                     
+		  AddDatasourcePopup.tsx                     |   63.89 |    72.86 |   73.75 |   62.86 | ...8-75,105,140-181 
+		  DatasourceLimitExceededModal.tsx           |     100 |      100 |     100 |     100 |                     
+		  DatasourceSettings.tsx                     |   45.94 |    76.62 |   74.55 |   75.65 | 774,818,
+		  OAuthPopup.tsx                             |   44.44 |    82.86 |   72.86 |   84.44 | 58-74,81 
+		  index.tsx                                  |   78.26 |    70.53 |      75 |   78.46 | 125,151,224                 
+		 Modules/Datasource/MultipleDataOwnerPopover |   64.71 |    78.33 |      75 |   64.71 |                     
+		  MultipleDataOwnerPopover.tsx               |   64.71 |    78.33 |      75 |   64.71 | 41,51-69   
+		 Modules/Datasource/Reducers                 |     100 |      100 |     100 |     100 |                     
+		  datasource.reducer.ts                      |     100 |      100 |     100 |     100 |                     
+		 Modules/Datasource/Service                  |   85.81 |    65.57 |   88.46 |   85.81 |                     
+		  datasource.service.ts                      |   55.17 |       80 |      80 |   75.17 | 101,113-129 
+		  deleteDatasource.service.ts                |     100 |      100 |     100 |     100 |                     
+		  getDSARSampleData.service.ts               |     100 |      100 |     100 |     100 |                     
+		  getSaaSDatasourceConfig.service.ts         |     100 |      100 |     100 |     100 |                     
+		  scanNow.service.ts                         |     100 |      100 |     100 |     100 |                     
+		  table-training.service.ts                  |    93.9 |       80 |   84.62 |    93.9 | 124-125,280-282     
+		  testauth.service.ts                        |   85.71 |      100 |     100 |   85.71 | 30                  
+		  update-table-training.service.ts           |   57.14 |       80 |     100 |   77.14 | 22-29               
+		  upgradePlan.service.ts                     |     100 |      100 |     100 |     100 |                     
+		  viewSampleData.service.ts                  |     100 |      100 |     100 |     100 |                     
+		 Modules/Datasource/TableTraining            |   76.63 |     66.8 |   72.11 |   76.88 |                     
+		  Components.tsx                             |     100 |      100 |     100 |     100 |                     
+		  ConfirmModal.tsx                           |   78.57 |    69.09 |   83.33 |   78.57 | 50-71         
+		  DiscardChangesConfirmModal.tsx             |      60 |      100 |   83.33 |      60 | 17-36               
+		  index.tsx                                  |   72.44 |    66.69 |   71.69 |   72.62 | 841-864 
+		---------------------------------------------|---------|----------|---------|---------|---------------------
+
+
+
+
+
+

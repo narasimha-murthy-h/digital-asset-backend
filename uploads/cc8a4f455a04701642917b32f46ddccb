@@ -1,0 +1,422 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=cyrillic,cyrillic-ext');
+body {
+  margin: 0;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.invalid-ddl .react-select__control--is-focused {
+  outline: none;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgb(220 53 69 / 25%);
+}
+
+.invalid-ddl:focus,
+.invalid-ddl .react-select__control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.invalid-ddl .react-select__control:hover {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgb(220 53 69 / 25%);
+}
+
+.invalid-ddl .react-select__control {
+  border-color: #dc3545;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.is-required {
+  border: 1px solid #dc3545 !important;
+  border-color: #dc3545 !important;
+  /* padding-right: calc(1.5em + 0.75rem) !important; */
+}
+
+.required-astric {
+  animation: none;
+  /*
+  Dummy class for required astrix
+  */
+}
+
+.required-astric label:after {
+  color: #dc3545;
+  content: ' *';
+  display: inline;
+}
+
+.is-required:focus {
+  color: #495057 !important;
+  background-color: #fff !important;
+  border-color: #dc3545 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 25%) !important;
+}
+
+.font-size-18 {
+  font-size: 18px;
+}
+
+.loadingoverlay {
+  z-index: 1061 !important;
+  cursor: progress;
+}
+
+.addDatasourceModal {
+  width: 70%;
+  max-width: 550px !important;
+  max-height: 180px;
+}
+
+.addDatasourceModal .modal-title,
+.tableTrainingConfirmModal .modal-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #333e46;
+}
+
+.addDatasourceModal .modal-header,
+.tableTrainingConfirmModal .modal-header {
+  border-bottom: none !important;
+  padding: 20px 20px 0px 15px;
+}
+
+.addDatasourceModal .modal-footer,
+.tableTrainingConfirmModal .modal-footer {
+  background: #f2f3f8;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.noOptionDDL {
+  padding: 5px;
+  text-align: center;
+  color: #808080;
+  font-size: 13px;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.disabledPointer {
+  pointer-events: none;
+}
+
+.custom-form-control,
+.react-select__value-container {
+  font-size: 14px;
+}
+
+.custom-tooltip .tooltip-inner {
+  max-width: 300px;
+}
+
+.page-heading-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  color: #010204;
+}
+
+.form-input-label {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.8);
+  text-transform: capitalize;
+}
+
+.columnLabel {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.columnSubtitle {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  color: #00b08b;
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
+.react-select-container .react-select__option--is-focused {
+  background-color: rgba(0, 176, 139, 0.1);
+}
+
+.react-select-container .react-select__option--is-selected,
+.react-select-container .react-select_tt__option--is-selected {
+  background-color: #00b08b;
+}
+
+.react-select_tt__menu-list {
+  max-height: 170px !important;
+}
+
+.react-select_tt__menu {
+  min-width: 200px !important;
+}
+
+.react-select_tt__menu-ellipsis .react-select_tt__option {
+  display: inline-flex;
+  width: 100%;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableTrainingConfirmModal {
+  max-width: 500px !important;
+}
+
+.disabled-switch .react-switch-handle,
+.disabled-switch .react-switch-bg {
+  cursor: not-allowed !important;
+}
+
+.sentModal {
+  width: 50%;
+  max-width: 380px !important;
+  max-height: 150px;
+}
+
+.daysRemainingModal {
+  width: 50%;
+  max-width: 500px !important;
+  max-height: 150px;
+  color: black;
+  font-size: 26px;
+  padding: 20px;
+  font-weight: 500;
+}
+
+.daysRemainingModal .modal-body {
+  padding: 50px;
+}
+
+.daysRemainingModal .modal-body .daysRemain > span {
+  background: #e90000;
+  margin-right: 5px;
+  font-size: 40px;
+  color: white;
+  padding: 10px 20px 10px 20px;
+  font-weight: 700;
+  border-radius: 5px;
+}
+
+.rootMissingModal {
+  width: 50%;
+  max-width: 380px !important;
+  max-height: 150px;
+}
+
+.rootMissingModal .modal-header {
+  border-bottom: none !important;
+  padding: 0px;
+}
+
+.sentModal .modal-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #333e46;
+}
+
+.sentModal .modal-header {
+  border-bottom: none !important;
+  padding: 20px 20px 0px 20px;
+}
+
+.sentModal .modal-body {
+  padding: 30px;
+}
+.brandColor {
+  color: #00b08b;
+}
+.brandColor:hover {
+  color: #00b08b;
+  text-decoration: none;
+}
+
+.confirmModal {
+  width: 70%;
+  max-width: 500px !important;
+  max-height: 150px;
+}
+
+.confirmModal .modal-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #333e46;
+}
+
+.confirmModal .modal-header {
+  border-bottom: none !important;
+  padding: 15px 15px 0px 15px;
+}
+
+.confirmModal .modal-body {
+  padding: 15px;
+}
+
+.confirmModal .modal-footer {
+  background: #f2f3f8;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.footerButton {
+  width: 80px;
+  height: 38px;
+}
+
+.react-select_tt__placeholder,
+.react-select_tt__option,
+.react-select_tt__single-value {
+  font-size: 13px !important;
+}
+
+.react-select__placeholder,
+.react-select__option,
+.react-select__menu-notice--no-options,
+.react-select__single-value {
+  font-size: 13px !important;
+}
+
+.confirmModal-800 {
+  width: 70%;
+  max-width: 800px !important;
+  max-height: 150px;
+}
+
+.confirmModal-800 .modal-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #333e46;
+}
+
+.confirmModal-800 .modal-header {
+  border-bottom: none !important;
+  padding: 15px 15px 0px 15px;
+}
+
+.confirmModal-800 .modal-body {
+  padding: 15px;
+}
+
+.confirmModal-800 .modal-footer {
+  background: #f2f3f8;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.confirmModal-600 {
+  width: 70%;
+  max-width: 600px !important;
+  max-height: 180px;
+}
+
+.confirmModal-600 .modal-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #333e46;
+}
+
+.confirmModal-600 .modal-header {
+  border-bottom: none !important;
+  padding: 15px 15px 0px 15px;
+}
+
+.confirmModal-600 .modal-body {
+  padding: 15px;
+}
+
+.confirmModal-600 .modal-footer {
+  background: #f2f3f8;
+  margin-top: 10px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* .approve-deny-sidebar-overlay {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+} */
+
+.approve-deny-sidebar-sidebar {
+  top: 85px !important;
+  padding-right: 15px !important;
+  min-height: 350px !important;
+  bottom: 15px !important;
+}
+
+.height-16px {
+  height: 16px;
+}
+.text-trasnformation-none {
+  text-transform: none !important;
+}
+
+.react-select__menu,
+.react-select__menu-list,
+.react-select__option {
+  z-index: 11 !important;
+}
+
+.licenseChartContainer .highcharts-container svg {
+  height: 90px !important;
+  width: 100px !important;
+}
+
+.licenseChartContainer .highcharts-container {
+  height: 100px !important;
+  width: 100px !important;
+  margin: 0 auto;
+}
+.licenseChartContainerMain {
+  height: 90px;
+}
+.empty-btn {
+  background: none;
+  border: none;
+}
+
+.piechart-sub-lbl-heading {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+  font-style: normal;
+}
+.pie-chart-lbl-container {
+  padding-top: 18px;
+}
+.pie-chart-lbl {
+  font-weight: 500;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 37px;
+  letter-spacing: -0.6px;
+  color: #333333;
+  margin-bottom: -5px;
+}
+

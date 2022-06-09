@@ -1,0 +1,418 @@
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message'
+import styles from '../PrivacyCenterBranding.module.css'
+import * as Icon from 'react-feather'
+import cx from 'classnames'
+import ButtonWithIcon, { CancelButtonWithIcon } from 'Modules/Common/Components/Button'
+import { I18n } from 'react-redux-i18n'
+import LoginPreview from './LoginPreview'
+import reactCSS from 'reactcss'
+import { SketchPicker, ChromePicker } from 'react-color'
+import { actionGetPCBranding } from '../Actions/getPCBranding.actions'
+import { actionUpdatePCBranding, dispatchUpdatePCBrandingClear } from '../Actions/updatePCBranding.actions'
+import { BrandingModel } from '../Models'
+import ConfirmModal from '../ConfirmModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppStateType } from 'Store/reducers'
+import { getEnvironmentVariables } from 'Config'
+import PCRequestsPreview from './PCRequestsPreview'
+import { Button } from 'react-bootstrap'
+import { color } from 'highcharts'
+import { Col, Form } from 'react-bootstrap'
+import { emailRegex, ValidateFTP_HTTP } from 'Modules/Common/Constants'
+
+function Branding() {
+  const dispatch = useDispatch()
+  const enviromentVar = getEnvironmentVariables()
+  const { branding: brandingFetchData, updateBranding } = useSelector(
+    (state: AppStateType) => state.PrivacyCenterReducer
+  )
+  const [logoPath, setLogoPath] = useState<string>()
+  const [selectedTab, setSelectedTab] = useState('login')
+  const [selectedColor, setSelectedColor] = useState<string>()
+  const [showColor, setShowColor] = useState<boolean>(false)
+  const [showConfirm, setShowConfirm] = useState<boolean>(false)
+  const [selectedImg, setSelectedImg] = useState<File>()
+  const [errMsg, setErrMsg] = useState<string>()
+
+  const onProceedClick = () => {
+    let brandingData: BrandingModel = {
+      logo_url: logoPath,
+      logo: selectedImg,
+      privacy_policy: getValues('privacy_policy'),
+      terms_of_use: getValues('terms_of_use'),
+      contact_email: getValues('contact_email'),
+      menu_style_color: selectedColor,
+    }
+    setShowConfirm(false)
+    dispatch(actionUpdatePCBranding(brandingData))
+  }
+
+  useEffect(() => {
+    dispatch(actionGetPCBranding())
+  }, [])
+  useEffect(() => {
+    if (brandingFetchData?.data) {
+      setLogoPath(brandingFetchData?.data?.logo_url)
+      setSelectedColor(brandingFetchData?.data?.menu_style_color)
+      setValue('privacy_policy',brandingFetchData?.data?.privacy_policy)
+      setValue('terms_of_use', brandingFetchData.data?.terms_of_use)
+      setValue('contact_email',brandingFetchData?.data?.contact_email)
+    }
+  }, [brandingFetchData])
+  useEffect(() => {
+    if (updateBranding?.success) {
+      dispatch(actionGetPCBranding())
+      dispatch(dispatchUpdatePCBrandingClear())
+    }
+  }, [updateBranding])
+  const onSubmit = () => {
+    setShowConfirm(true)
+  }
+  let page: JSX.Element
+  page = <LoginPreview logoPath={logoPath} color={selectedColor} />
+  const onTabClick = (tab: string) => {
+    setSelectedTab(tab)
+  }
+  if (selectedTab == 'login') {
+    page = <LoginPreview logoPath={logoPath} color={selectedColor} />
+  }
+
+  if (selectedTab == 'requests') {
+    page = <PCRequestsPreview logoPath={logoPath} color={selectedColor}/>
+  }
+
+  const onHidePopup = () => {
+    setShowConfirm(false)
+  }
+
+  const onFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const extention: string = event?.target?.files[0]?.type
+    if (event?.target?.files?.length > 0) {
+      if (extention === 'image/png' || extention === 'image/jpeg' || extention === 'image/svg+xml') {
+        setLogoPath(URL.createObjectURL(event.target.files[0]))
+        if (event.target.files[0].size > 4194304) {
+          setErrMsg(I18n.t('pcBranding.logoSizeErr'))
+        } else {
+          setSelectedImg(event.target.files[0])
+          setErrMsg('')
+        }
+      } else {
+        setErrMsg(I18n.t('pcBranding.incorrectFile'))
+      }
+    }
+  }
+  const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');  
+  const onSaveClick = () => {
+    if (!errMsg) {
+      setShowConfirm(true)
+    }
+  }
+
+  const onCancel = () => {
+    setErrMsg('')
+    setLogoPath(brandingFetchData?.data?.logo_url)
+    setSelectedColor(brandingFetchData?.data?.menu_style_color)
+    setValue('privacy_policy',brandingFetchData?.data?.privacy_policy)
+    setValue('terms_of_use',brandingFetchData.data?.terms_of_use)
+    setValue('contact_email',brandingFetchData?.data?.contact_email) 
+  }
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+  })
+  let companyLogoElem = (
+    <>
+      <div className="col-md-12 mt-2">
+        <input
+          type="file"
+          name="file"
+          id="file"
+          className={styles.inputfile}
+          onChange={onFileUpload}
+          accept=".png, .jpg, .jpeg, .svg"
+          x-automation-id="upload-logo"
+        />
+        <label className={cx('d-flex align-items-center flex-column', styles.lblUploadindx)} htmlFor="file">
+          <Icon.Upload color="#787878" width="30" height="30" />
+          <span>{I18n.t('pcBranding.uploadLogo')}</span>
+        </label>
+      </div>
+    </>
+  )
+  if (logoPath) {
+    companyLogoElem = <img src={logoPath} className={styles.companyLogoImg} alt="Logo" width="contain" />
+  } 
+
+  return (
+    <>
+      <div className={cx(styles.logoBox)}>
+        <div className="d-flex flex-column justify-content-center">
+          <div className={cx(styles.customizeTitleSmalllogo, 'd-flex align-items-center mb-1')}>
+              {I18n.t('pcBranding.logo')}
+          </div>
+          </div>
+          <div className="d-flex flex-column justify-content-center">
+        <div className={cx( styles.boxMargin)}>
+          <div
+            className={cx(
+              
+              styles.customizeUploadLogo,
+              styles.customizeTitleSmall,
+              styles.imgBox
+            )}
+          >
+            <div className={cx('d-flex align-items-center justify-content-center', styles.customizeLogoLabel)}>
+              {companyLogoElem}
+            </div>
+          </div>
+          {errMsg && <span className={styles.extError}>{errMsg}</span>}
+          {logoPath && (
+            <>
+              <div className="mt-2">
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  className={styles.inputfile}
+                  onChange={onFileUpload}
+                  accept=".png, .jpg, .jpeg, .svg"
+                  x-automation-id="upload-logo-update"
+                />
+                <label
+                  className={cx(
+                    'brandColor cursor-pointer d-flex align-items-center flex-column',
+                    styles.lblUploadindx
+                  )}
+                  htmlFor="file"
+                >
+                  <span>{I18n.t('pcBranding.changeLogo')}</span>
+                </label>
+              </div>
+            </>
+          )}
+        </div>
+        </div>
+        <div className="d-flex flex-column justify-content-center">
+          <div className={cx(styles.customizeTitleSmalllogo, 'd-flex align-items-center mb-1')}>
+              {I18n.t('pcBranding.notes')}
+          </div>
+        </div>
+        <ul>
+          <li className={cx(styles.list)}>
+            <div className={cx('d-flex justify-content-start')}>
+              <span className={styles.bcLogo}> {I18n.t('pcBranding.bcLogo')}</span>
+            </div>
+          </li>
+          <li className={cx(styles.list)}>
+            <div className={cx('d-flex justify-content-start', styles.fileTypeText)}>
+              <span>{I18n.t('pcBranding.allowedFileType')}</span>
+              <span className={styles.fileExtension}> {I18n.t('pcBranding.fileTypes')}</span>
+            </div>
+          </li>  
+          <li className={cx(styles.list)}>
+            <div className={cx('d-flex justify-content-start', styles.fileTypeText)}>
+              <span> {I18n.t('pcBranding.maximumSize')}</span>
+              <span className={styles.fileExtension}>{I18n.t('pcBranding.fileSize')}</span>
+            </div>
+          </li>
+        </ul>
+        <div className={cx("d-flex flex-column justify-content-center",styles.lineBar)}></div>
+        <div className="d-flex flex-column justify-content-center">
+          <div className={cx(styles.customizeTitleSmalllogos, 'd-flex align-items-center mb-1')}>
+              {I18n.t('pcBranding.pvcPolicy')}
+          </div>
+        </div>
+        <Form id="addDatasourceForm" key={1} noValidate onSubmit={handleSubmit(onSubmit)} className="w-100">
+        <Form.Group controlId="privacyPolicy">
+            <Form.Control
+              maxLength={45}
+              x-automation-id="pvc-policy"
+              {...register('privacy_policy', {
+                pattern: {
+                  value: regex,
+                  message: I18n.t('pcBranding.pvcPolicyRequired'),
+                },
+              })}isInvalid={errors?.url}
+              className={`custom-form-control ${errors?.privacy_policy ? 'is-invalid' : ''}`}
+            />
+            <ErrorMessage className="invalid-feedback" name="privacy_policy" as="div" errors={errors} />
+            
+          
+              
+          </Form.Group>
+        <div className="d-flex flex-column justify-content-center">
+          <div className={cx(styles.customizeTitleSmalllogoss, 'd-flex align-items-center mb-1')}>
+              {I18n.t('pcBranding.tmsUse')}
+          </div>
+        </div>
+        <Form.Group controlId="termsOfUse">
+            <Form.Control
+              maxLength={45}
+              x-automation-id="tms-use"
+              {...register('terms_of_use',{
+                pattern: {
+                  value: regex,
+                  message: I18n.t('pcBranding.tmsUseRequired'),
+                },
+              })}isInvalid={errors?.url}
+              className={`custom-form-control ${errors?.terms_of_use ? 'is-invalid' : ''}`}
+            />
+            <ErrorMessage className="invalid-feedback" name="terms_of_use" as="div" errors={errors} />
+          </Form.Group>
+        <div className="d-flex flex-column justify-content-center">
+          <div className={cx(styles.customizeTitleSmalllogoss, 'd-flex align-items-center mb-1')}>
+              {I18n.t('pcBranding.cntEmail')}
+          </div>
+        </div>
+        <Form.Group className="required-astric" controlId="contactEmail">
+            <Form.Control
+              maxLength={45}
+              x-automation-id="cnt-email"
+              type= "email"
+              {...register('contact_email', {
+                pattern: {
+                  value: emailRegex,
+                  message: I18n.t('pcBranding.cntEmailRequired'),
+                },
+              })}
+              isInvalid={errors?.email}
+              className={`custom-form-control ${errors?.contact_email ? 'is-invalid' : ''}`}
+            />
+            <ErrorMessage className="invalid-feedback" name="contact_email" as="div" errors={errors} />
+            </Form.Group>
+        </Form>
+      </div>
+      <div className={cx(styles.middleBox)}></div>
+      <div className={cx(styles.pickerBox)}>
+        <div className={cx(styles.previewTextStyle, 'd-flex align-items-center mb-0')}>
+          {I18n.t('pcBranding.preview')}
+        </div>
+        <div className="row m-0 mt-3 p-0 w-100">
+        <div className="col-md-12 m-0 p-0 d-flex">
+        <button
+            className={cx(
+              styles.tabsButton,
+              styles.tabsButtonLeft,
+              selectedTab == 'login' ? styles.tabsButtonActive : ''
+            )}
+            onClick={() => onTabClick('login')}
+            x-automation-id="btn-login"
+            id="btn-login"
+          >
+            {I18n.t('pcBranding.login')}
+          </button>
+          <button
+            className={cx(
+              styles.tabsButton,
+              styles.tabsButtonRight,
+              selectedTab == 'requests' ? styles.tabsButtonActive : ''
+            )}
+            onClick={() => onTabClick('requests')}
+            x-automation-id="btn-request"
+            id="btn-request"
+          >
+            {I18n.t('pcBranding.requests')}
+            </button>
+            <div className={cx(styles.middleBoxs)}></div>
+            <div className="d-flex flex-column justify-content-center">
+            <div
+            className={cx(
+              'd-flex flex-column justify-content-center align-items-center pl-0')}>
+                <label className={cx(
+              ' cursor-pointer d-flex align-items-center flex-column', styles.lblUploadindxs)}>
+              <div>
+          <a onClick={() => setShowColor(showColor => !showColor)}>
+                {showColor ? 
+                  <div>{I18n.t('pcBranding.tkeColor')}</div> :
+                  <div>{I18n.t('pcBranding.tstColor')}</div>}
+                </a></div>
+            </label>
+              </div>
+            </div>
+            <div className={cx('col-md-3', styles.boxMargins)}>
+        <div
+            className={cx(
+          
+              styles.imgBoxs
+            )}
+          >
+            <div className={cx('d-flex align-items-center justify-content-center')}>
+              
+              <div className={cx(styles.colorBox)}
+                    style={{
+                      backgroundColor : selectedColor,
+                      transition : 'ease all 500ms',
+                }}>
+                 <div className={cx(styles.colorPannel)}>
+                  {showColor && (<SketchPicker color={selectedColor} onChangeComplete={updatedColor => { setSelectedColor(updatedColor.hex) }} />)}
+                </div> 
+              </div>
+             
+            </div>
+            
+            
+             
+          </div>
+          
+          
+        </div>
+            </div>
+        </div>
+        <div className={cx(styles.previewBox)}>
+        
+          <div className={styles.previewBrowserContainer}>
+            <div className="d-flex align-items-center">
+              <span className={styles.previewGreyCircle} />
+              <span className={styles.previewGreyCircle} />
+              <span className={styles.previewGreyCircle} />
+              <div className={styles.previewUrlBlock}>
+                <span className={styles.urlPreview} x-automation-id="spn-url-preview">
+                  {`${enviromentVar?.PRIVACY_CENTER_URL}/${brandingFetchData?.data?.privacy_center_url}/${selectedTab}`}
+                </span>
+              </div>
+            </div>
+            {/* <Icon.Menu color="#9FAAB1" /> */}
+          </div>
+          {page}
+        </div>
+      </div>
+      
+      <div className={cx(styles.saveBtnFixedRows)}>
+      </div>
+      <Form.Row className={styles.saveBtnFixedRow}>
+      <Col xs={5} className=" p-2 pl-4 d-flex">
+          <ButtonWithIcon
+            type="submit"
+            text={I18n.t('common.saveAndPublish')}
+            x-automation-id="btn-save-publish"
+            style={{ width: '120px' }}
+            id="btn-save-logo"
+            className="mr-3"
+            disabled={errors && (errors?.privacy_policy || errors?.terms_of_use || errors?.contact_email) }
+            onClick={onSaveClick}
+          />
+          <CancelButtonWithIcon
+            text={I18n.t('common.cancel')}
+            x-automation-id="next-btn"
+            id="btncancelrevert"
+            type="button"
+            onClick={onCancel}
+          />
+        </Col>
+        </Form.Row>
+      <ConfirmModal show={showConfirm} onHidePopup={onHidePopup} onProceedClick={onProceedClick} />
+    </>
+  )
+}
+
+export default React.memo(Branding)
+
